@@ -10,12 +10,13 @@ namespace BankAccount
     {
         static void Main(string[] args)
         {
-            var account = new BankAccount("<name>", 1000);
+            var account = new BankAccount("Bob",100);
             Console.WriteLine($"Account {account.Number} was created for {account.Owner} with {account.Balance} initial balance.");
             account.MakeWithdrawal(500, DateTime.Now, "Rent payment");
             Console.WriteLine(account.Balance);
             account.MakeDeposit(100, DateTime.Now, "Friend paid me back");
             Console.WriteLine(account.Balance);
+            Console.ReadKey();
         }
 
     }
@@ -72,7 +73,7 @@ namespace BankAccount
         {
             if (amount <= 0)
             {
-                throw new ArgumentOutOfRangeException(nameof(amount), "Amount of deposit must be positive");
+                throw new ArgumentOutOfRangeException(nameof(amount), "The deposit must be positive");
             }
             var deposit = new Transaction(amount, date, note);
             _allTransactions.Add(deposit);
@@ -82,11 +83,11 @@ namespace BankAccount
         {
             if (amount <= 0)
             {
-                throw new ArgumentOutOfRangeException(nameof(amount), "Amount of withdrawal must be positive");
+                throw new ArgumentOutOfRangeException(nameof(amount), "The withdrawal must be positive");
             }
             if (Balance - amount < 0)
             {
-                throw new InvalidOperationException("Not sufficient funds for this withdrawal");
+                throw new InvalidOperationException("Insufficient funds for this withdrawal");
             }
             var withdrawal = new Transaction(-amount, date, note);
             _allTransactions.Add(withdrawal);
